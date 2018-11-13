@@ -40,7 +40,7 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": ["node_modules/@google/markerclustererplus/src/markerclusterer.js"]
           },
           "configurations": {
             "production": {

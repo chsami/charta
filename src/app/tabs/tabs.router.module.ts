@@ -1,3 +1,4 @@
+import { MapPage } from './../map/map.page';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -30,6 +31,11 @@ const routes: Routes = [
         path: 'contact',
         outlet: 'contact',
         component: ContactPage
+      },
+      {
+        path: 'map',
+        outlet: 'map',
+        component: MapPage
       }
     ]
   },

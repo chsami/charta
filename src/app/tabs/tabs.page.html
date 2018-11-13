@@ -9,6 +9,9 @@
   <ion-tab tab="contact">
     <ion-router-outlet name="contact"></ion-router-outlet>
   </ion-tab>
+  <ion-tab tab="map">
+    <ion-router-outlet name="map"></ion-router-outlet>
+  </ion-tab>
 
   <ion-tab-bar slot="bottom">
 
@@ -27,6 +30,10 @@
       <ion-label>Contact</ion-label>
     </ion-tab-button>
 
+    <ion-tab-button tab="map" href="/tabs/(map:map)">
+      <ion-icon name="map"></ion-icon>
+      <ion-label>Map</ion-label>
+    </ion-tab-button>
   </ion-tab-bar>
 
 </ion-tabs>

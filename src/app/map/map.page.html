@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>map</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar [autocomplete]="true" [(ngModel)]="myInput" [showCancelButton]="false" [debounce]="800" (ionChange)="onChange($event)"
+    (ionBlur)="onBlur($event)" (ionFocus)="onFocus($event)">
+  </ion-searchbar>
+  <ion-list *ngIf="searchResults && !hideList">
+    <ion-item *ngFor="let result of searchResults">
+      <ion-label (click)="pinpointAddressOnMap(result['geometry']['location'])">{{result['formatted_address']}}</ion-label>
+    </ion-item>
+  </ion-list>
+  <app-googlemaps></app-googlemaps>
+</ion-content>
