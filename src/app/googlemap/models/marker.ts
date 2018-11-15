@@ -15,10 +15,8 @@ export class Marker extends google.maps.Marker {
     /**
      *
      */
-    constructor(markers: GoogleMapsService, opts?: google.maps.MarkerOptions) {
+    constructor(googleMapService: GoogleMapsService, opts?: google.maps.MarkerOptions) {
         super(opts);
-        this.addListener('click', (event) => {
-            markers.setSelectedMarker(this);
-        });
+        googleMapService.registerMarkerClick(this);
     }
 }

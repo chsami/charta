@@ -16,6 +16,10 @@ export class MapPage implements OnInit {
   ngOnInit() {}
 
   onChange(event) {
+    this.getLocationFromAddress();
+  }
+
+  getLocationFromAddress() {
     this.googleMapsService
       .getGeocodeFromAddress(this.myInput)
       .subscribe((response: any) => {

@@ -16,59 +16,12 @@ export class GoogleMapsComponent implements OnInit {
   @ViewChild('map') mapElement: ElementRef;
 
   ngOnInit(): void {
-    this.loadMap();
+    this.googleMapsService.loadMap(this.mapElement);
   }
 
   constructor(private googleMapsService: GoogleMapsService) {}
 
-  /**
-   * Load google maps
-   */
-  loadMap() {
-    const latLng = new google.maps.LatLng(-34.929, 138.601);
-
-    const mapOptions: google.maps.MapOptions = {
-      center: latLng,
-      zoom: 16,
-      mapTypeId: google.maps.MapTypeId.SATELLITE,
-      // rotateControl: true,
-      // tilt: 45,
-      // panControl: true,
-      disableDefaultUI: true
-      // rotateControlOptions: {
-      //   position: google.maps.ControlPosition.RIGHT_CENTER
-      // }
-    };
-
-
-
-    this.googleMapsService.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
-    const markerCluster = new MarkerClusterer(this.googleMapsService.map, this.googleMapsService._markers);
-
-    const overlay = new google.maps.OverlayView();
-    overlay.draw = function() {
-      this.getPanes().markerLayer.id = 'markerLayer';
-    };
-    overlay.setMap(this.googleMapsService.map);
-
-    google.maps.event.addListener(this.googleMapsService.map, 'click', event => {
-      const marker = new Marker(this.googleMapsService, {
-        position: event.latLng,
-        map: this.googleMapsService.map,
-        draggable: true,
-        clickable: true
-        // icon: {
-        //   url: "assets/img/target_sami_medium.png",
-        //   origin: new google.maps.Point(0, 0),
-        //   scaledSize: new google.maps.Size(250, 250)
-        // }
-      });
-      markerCluster.addMarker(marker);
-      this.googleMapsService.addMarker(marker);
-      this.googleMapsService.map.panTo(this.googleMapsService.getLast().getPosition());
-    });
-  }
+ 
 
   public rotateMarker(clockwise: boolean): void {
     this.googleMapsService.rotateMarker(clockwise);
@@ -78,8 +31,8 @@ export class GoogleMapsComponent implements OnInit {
     this.googleMapsService.deleteMarker();
   }
 
-  public get selectedMarker(): number {
-    return this.googleMapsService.selectedMarker;
+  public get selectedMarker(): Marker {
+    return this.selectedMarker;
   }
 
   public saveMarker() {
