@@ -78,6 +78,7 @@ export class GoogleMapsService {
             this.addMarker(marker);
             this.map.panTo(this.getLast().getPosition());
         });
+        this.addCompass();
     }
 
     // GEOCODING
@@ -206,20 +207,35 @@ export class GoogleMapsService {
         names: string[],
         element: HTMLElement
     ): Promise<HammerManager> {
-        const hammerManager = new Hammer.Manager(element);
-        await names.forEach(name => {
-            switch (name) {
-                case 'pinch':
-                    hammerManager.add(new Hammer.Pinch({ event: 'pinch' }));
-                    break;
-                case 'rotate':
-                    hammerManager.add(new Hammer.Pinch({ event: 'rotate' }));
-                    break;
-                case 'pan':
-                    hammerManager.add(new Hammer.Pinch({ event: 'pan' }));
-                    break;
-            }
-        });
-        return hammerManager;
+        if (element) {
+            const hammerManager = new Hammer.Manager(element);
+            await names.forEach(name => {
+                switch (name) {
+                    case 'pinch':
+                        hammerManager.add(new Hammer.Pinch({ event: 'pinch' }));
+                        break;
+                    case 'rotate':
+                        hammerManager.add(
+                            new Hammer.Pinch({ event: 'rotate' })
+                        );
+                        break;
+                    case 'pan':
+                        hammerManager.add(new Hammer.Pinch({ event: 'pan' }));
+                        break;
+                }
+            });
+            return hammerManager;
+        }
+        return null;
+    }
+
+    // Compass
+
+    addCompass() {
+        const div = document.createElement('div');
+        const icon =
+            'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png';
+        div.innerHTML = '<img src="' + icon + '"> ' + name;
+        this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(div);
     }
 }
