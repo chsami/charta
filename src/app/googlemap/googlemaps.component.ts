@@ -4,6 +4,7 @@ import { Marker } from './models/marker';
 
 /// <reference path="../../../node_modules/@types/googlemaps/index.d.ts" />
 /// <reference path="../../../node_modules/@types/markerclustererplus/index.d.ts" />
+/// <reference path="../../../node_modules/@types/hammerjs/index.d.ts" />
 
 
 @Component({
@@ -16,12 +17,23 @@ export class GoogleMapsComponent implements OnInit {
   @ViewChild('map') mapElement: ElementRef;
 
   ngOnInit(): void {
-    this.googleMapsService.loadMap(this.mapElement);
+    const mydiv: HTMLElement = document.getElementById('lol');
+    this.googleMapsService.registerGesture(['pinch', 'rotate', 'pan'], mydiv).then((hammer: HammerManager) => {
+      hammer.on('pinch rotate pan', (event) => {
+        this.googleMapsService.presentToast(event.scale.toString());
+      });
+    });
+    const lat: number = -34.929;
+    const long: number = 138.601;
+    this.googleMapsService.init(this.mapElement, lat, long);
+  }
+
+  test(event) {
+    console.log('cool');
+    this.googleMapsService.presentToast('cool');
   }
 
   constructor(private googleMapsService: GoogleMapsService) {}
-
- 
 
   public rotateMarker(clockwise: boolean): void {
     this.googleMapsService.rotateMarker(clockwise);

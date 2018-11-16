@@ -6,28 +6,36 @@ import { HttpClient } from '@angular/common/http';
 import { MarkerStateEnum } from './enum/marker.enum';
 import { ToastController } from '@ionic/angular';
 
+import 'hammerjs';
+
 /// <reference path="../../../node_modules/@types/googlemaps/index.d.ts" />
+/// <reference path="../../../node_modules/@types/hammerjs/index.d.ts" />
 
 @Injectable()
 export class GoogleMapsService {
-
-    map: google.maps.Map;
-
-    selectedMarker: Marker;
+    private _map: google.maps.Map;
+    private selectedMarker: Marker;
     private _markers: Marker[] = [];
-    markersSubject: BehaviorSubject<Marker[]> = new BehaviorSubject([]);
-    markers$: Observable<Marker[]>;
 
-    constructor(private http: HttpClient, private toastController: ToastController) {
-        this.markersSubject = new BehaviorSubject(this._markers);
-        this.markers$ = this.markersSubject.asObservable();
+    constructor(
+        private http: HttpClient,
+        private toastController: ToastController
+    ) {}
+
+    public get map(): google.maps.Map {
+        return this._map;
     }
 
     /**
-    * Load google maps
-    */
-    public loadMap(mapElement: ElementRef) {
-        const latLng = new google.maps.LatLng(-34.929, 138.601);
+     * Loadmap
+     * @param mapElement html map elemnt
+     */
+    public init(
+        mapElement: ElementRef,
+        startLat: number,
+        startLong: number
+    ): void {
+        const latLng = new google.maps.LatLng(startLat, startLong);
 
         const mapOptions: google.maps.MapOptions = {
             center: latLng,
@@ -42,16 +50,14 @@ export class GoogleMapsService {
             // }
         };
 
-
-
-        this.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
+        this._map = new google.maps.Map(mapElement.nativeElement, mapOptions);
 
         const markerCluster = new MarkerClusterer(this.map, this._markers);
 
         markerCluster.setMaxZoom(16);
 
         const overlay = new google.maps.OverlayView();
-        overlay.draw = function () {
+        overlay.draw = function() {
             this.getPanes().markerLayer.id = 'markerLayer';
         };
         overlay.setMap(this.map);
@@ -74,19 +80,52 @@ export class GoogleMapsService {
         });
     }
 
-    public registerMarkerClick(marker: Marker) {
-        marker.addListener('click', (event) => {
-            this.setSelectedMarker(marker);
-            this.getAddressFromGeocode(marker.getPosition());
-        });
+    // GEOCODING
+
+    public getGeocodeFromAddress(address: string): Observable<any> {
+        return this.http.get(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${
+                environment.GOOGLE_MAPS_API_KEY
+            }`
+        );
     }
 
-    async presentToast(message: string) {
+    public getGeocodeFromSelectedMarker(): google.maps.LatLng {
+        return this.selectedMarker.getPosition();
+    }
+
+    public async getAddressFromGeocode(
+        location: google.maps.LatLng
+    ): Promise<string> {
+        const geocoder = new google.maps.Geocoder();
+        const latlng = location;
+        let address: google.maps.GeocoderResult;
+        geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === google.maps.GeocoderStatus.OK) {
+                address = results[0];
+                this.presentToast(address.formatted_address);
+            }
+        });
+        return address.formatted_address;
+    }
+
+    // MISC
+
+    async presentToast(message: string): Promise<void> {
         const toast = await this.toastController.create({
             message: message,
             duration: 2000
         });
         toast.present();
+    }
+
+    // MARKER Functionality
+
+    public registerMarkerClick(marker: Marker): void {
+        marker.addListener('click', event => {
+            this.setSelectedMarker(marker);
+            this.getAddressFromGeocode(marker.getPosition());
+        });
     }
 
     public findByIndex(index: number): Marker {
@@ -116,11 +155,12 @@ export class GoogleMapsService {
         marker.state = MarkerStateEnum.CREATION;
         this._markers.push(marker);
         this.selectedMarker = marker;
-        this.markersSubject.next([...this._markers]);
     }
 
     public rotateMarker(clockwise: boolean): void {
-        const markerIndex = this._markers.findIndex(x => x == this.selectedMarker);
+        const markerIndex = this._markers.findIndex(
+            x => x === this.selectedMarker
+        );
         const elements: NodeListOf<Element> = document.querySelectorAll(
             '#markerLayer img'
         );
@@ -136,48 +176,50 @@ export class GoogleMapsService {
         }
     }
 
-    public deleteMarker() {
+    public deleteMarker(): void {
         const marker: Marker = this._markers[this._markers.length - 1];
         if (marker.state === MarkerStateEnum.CREATION) {
             marker.setMap(null);
             this._markers = this._markers.slice(0, this.countMarkers() - 1);
-            this.markersSubject.next([...this._markers]);
             this.selectedMarker = null;
         }
     }
 
-    public hideMarker(marker: Marker) {
+    public hideMarker(marker: Marker): void {
         marker.setMap(null);
     }
 
-    public saveMarker() {
+    public saveMarker(): void {
         const marker: Marker = this.getLast();
         marker.state = MarkerStateEnum.IDLE;
         this.selectedMarker = null;
     }
 
-    public getGeocodeFromAddress(address: string) {
-        return this.http.get(
-            `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${
-            environment.GOOGLE_MAPS_API_KEY
-            }`
-        );
-    }
+    // Gestures
 
-    public getGeocodeFromSelectedMarker() {
-        return this.selectedMarker.getPosition();
-    }
-
-    public async getAddressFromGeocode(location: google.maps.LatLng): Promise<string> {
-        const geocoder = new google.maps.Geocoder;
-        const latlng = location;
-        let address: google.maps.GeocoderResult;
-        geocoder.geocode({ 'location': latlng }, (results, status) => {
-            if (status === google.maps.GeocoderStatus.OK) {
-                address = results[0];
-                this.presentToast(address.formatted_address);
+    /**
+     * Registering gestures because of: https://github.com/ionic-team/ionic/issues/14883
+     * @param names names of the gestures
+     * @param element Html element to apply gestures on
+     */
+    async registerGesture(
+        names: string[],
+        element: HTMLElement
+    ): Promise<HammerManager> {
+        const hammerManager = new Hammer.Manager(element);
+        await names.forEach(name => {
+            switch (name) {
+                case 'pinch':
+                    hammerManager.add(new Hammer.Pinch({ event: 'pinch' }));
+                    break;
+                case 'rotate':
+                    hammerManager.add(new Hammer.Pinch({ event: 'rotate' }));
+                    break;
+                case 'pan':
+                    hammerManager.add(new Hammer.Pinch({ event: 'pan' }));
+                    break;
             }
         });
-        return address.formatted_address;
+        return hammerManager;
     }
 }
