@@ -78,17 +78,18 @@ export class MapService {
 
     public async getAddressFromGeocode(
         location: google.maps.LatLng
-    ): Promise<string> {
-        const geocoder = new google.maps.Geocoder();
-        const latlng = location;
-        let address: google.maps.GeocoderResult;
-        geocoder.geocode({ location: latlng }, (results, status) => {
-            if (status === google.maps.GeocoderStatus.OK) {
-                address = results[0];
-                console.log(address.formatted_address);
-            }
+    ): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const geocoder = new google.maps.Geocoder();
+            const latlng = location;
+            let address: google.maps.GeocoderResult;
+            geocoder.geocode({ location: latlng }, (results, status) => {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    address = results[0];
+                    resolve(address.formatted_address);
+                }
+            });
         });
-        return address.formatted_address;
     }
 
     // Compass

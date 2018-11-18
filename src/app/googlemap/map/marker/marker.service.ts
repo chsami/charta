@@ -13,10 +13,14 @@ export class MarkerService {
     private selectedMarker: Marker;
     private _markers: Marker[] = [];
 
-    private markerCluster: MarkerClusterer;
+    private _markerCluster: MarkerClusterer;
 
     public get markers(): Marker[] {
         return this._markers;
+    }
+
+    public get markerCluster(): MarkerClusterer {
+        return this._markerCluster;
     }
 
     constructor() {
@@ -24,7 +28,7 @@ export class MarkerService {
     }
 
     public createCluster(map: google.maps.Map) {
-        this.markerCluster = new MarkerClusterer(
+        this._markerCluster = new MarkerClusterer(
             map,
             this.markers
         );

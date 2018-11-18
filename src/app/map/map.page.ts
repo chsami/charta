@@ -1,4 +1,12 @@
-import { Component, OnInit, ElementRef, ViewChild, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ElementRef,
+    ViewChild,
+    ViewChildren,
+    AfterViewInit,
+    QueryList
+} from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { MapService } from '../googlemap/map/map.service';
 import { GestureService } from '../googlemap/gesture/gesture.service';
@@ -20,8 +28,10 @@ export class MapPage implements OnInit, AfterViewInit {
 
     @ViewChild('map') mapElement: ElementRef;
 
-    constructor(private mapService: MapService, private markerService: MarkerService) { }
-
+    constructor(
+        private mapService: MapService,
+        private markerService: MarkerService
+    ) {}
 
     ngOnInit(): void {
         /*this.gestureService
@@ -33,20 +43,47 @@ export class MapPage implements OnInit, AfterViewInit {
                     });
                 }
             });*/
-        
     }
 
     ngAfterViewInit(): void {
         const lat: number = -34.929;
         const long: number = 138.601;
-        //init map
-        const map = this.mapService.init(this.mapElement, lat, long, environment.GOOGLE_MAPS_API_KEY);
-        //add marker when we click on map
-        const marker = this.markerService.registerMarkerOnClick(map);
-        //add click event to the marker
-        marker.addListener('click', event => {
-            this.mapService.getAddressFromGeocode(marker.getPosition());
-        });
+        // init map
+        const map = this.mapService.init(
+            this.mapElement,
+            lat,
+            long,
+            environment.GOOGLE_MAPS_API_KEY
+        );
+        // init cluster
+        this.markerService.createCluster(map);
+        // add marker when we click on map
+        google.maps.event.addListener(
+            map,
+            'click',
+            event => {
+                const marker = new Marker(this.markerService, {
+                    position: event.latLng,
+                    map: map,
+                    draggable: true,
+                    clickable: true
+                    // icon: {
+                    //   url: "assets/img/target_sami_medium.png",
+                    //   origin: new google.maps.Point(0, 0),
+                    //   scaledSize: new google.maps.Size(250, 250)
+                    // }
+                });
+                this.markerService.markerCluster.addMarker(marker);
+                this.markerService.addMarker(marker);
+                map.panTo(this.markerService.getLast().getPosition());
+                 // add click event to the marker
+                marker.addListener('click', () => {
+                    this.mapService.getAddressFromGeocode(marker.getPosition()).then((result) => {
+                        console.log(result);
+                    });
+                });
+            }
+        );
     }
 
     public rotateMarker(clockwise: boolean): void {
@@ -83,7 +120,10 @@ export class MapPage implements OnInit, AfterViewInit {
             .getGeocodeFromAddress(this.myInput)
             .subscribe((response: any) => {
                 console.log(response.results[0]);
-                this.searchResults = (response.results && response.results.length > 0) ? response.results : [];
+                this.searchResults =
+                    response.results && response.results.length > 0
+                        ? response.results
+                        : [];
             });
     }
 
@@ -91,7 +131,7 @@ export class MapPage implements OnInit, AfterViewInit {
         this.mapService.map.panTo(location);
     }
 
-    onCancel(event) { }
+    onCancel(event) {}
 
     onBlur(event) {
         setTimeout(() => {
@@ -102,7 +142,6 @@ export class MapPage implements OnInit, AfterViewInit {
     onFocus(event) {
         this.hideList = false;
     }
-
 
     /*async presentToast(message: string): Promise<void> {
         const toast = await this.toastController.create({
