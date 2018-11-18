@@ -14,6 +14,9 @@ import { Marker } from './models/marker';
 export class GoogleMapsComponent implements OnInit {
     @ViewChild('map') mapElement: ElementRef;
 
+    constructor(private googleMapsService: GoogleMapsService) {}
+
+
     ngOnInit(): void {
         const mydiv: HTMLElement = document.getElementById('lol');
         this.googleMapsService
@@ -37,7 +40,6 @@ export class GoogleMapsComponent implements OnInit {
         this.googleMapsService.presentToast('cool');
     }
 
-    constructor(private googleMapsService: GoogleMapsService) {}
 
     public rotateMarker(clockwise: boolean): void {
         this.googleMapsService.rotateMarker(clockwise);

@@ -1,3 +1,4 @@
+import { MarkerService } from './../providers/marker.service';
 
 
 
@@ -15,8 +16,8 @@ export class Marker extends google.maps.Marker {
     /**
      *
      */
-    constructor(googleMapService: GoogleMapsService, opts?: google.maps.MarkerOptions) {
+    constructor(markerService: MarkerService, opts?: google.maps.MarkerOptions) {
         super(opts);
-        googleMapService.registerMarkerClick(this);
+        markerService.registerMarkerClick(this);
     }
 }
