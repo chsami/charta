@@ -6,14 +6,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { MapPage } from './map.page';
-import { GoogleMapsModule } from '../googlemap/googlemaps.module';
+import { MapModule } from '../googlemap/map/map.module';
+import { MarkerModule } from '../googlemap/map/marker/marker.module';
+import { GestureModule } from '../googlemap/gesture/gesture.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    GoogleMapsModule,
+    MapModule,
+    MarkerModule,
     RouterModule.forChild([{ path: '', component: MapPage }])
   ],
   declarations: [MapPage]

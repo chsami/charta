@@ -13,5 +13,5 @@
       <ion-label (click)="pinpointAddressOnMap(result['geometry']['location'])">{{result['formatted_address']}}</ion-label>
     </ion-item>
   </ion-list>
-  <app-googlemaps></app-googlemaps>
+    <div #map id="map"></div>
 </ion-content>

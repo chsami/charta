@@ -1,7 +1,10 @@
-import { MarkerStateEnum } from './../enum/marker.enum';
 import { MarkerModule } from './marker.module';
-import { Injectable } from '@angular/core';
 import { Marker } from './models/marker';
+import { Injectable } from '@angular/core';
+import { MarkerStateEnum } from './enum/marker.enum';
+import { MapService } from '../map.service';
+
+/// <reference path="../../../node_modules/@types/googlemaps/index.d.ts" />
 
 @Injectable({
     providedIn: MarkerModule
@@ -10,52 +13,52 @@ export class MarkerService {
     private selectedMarker: Marker;
     private _markers: Marker[] = [];
 
+    private markerCluster: MarkerClusterer;
+
     public get markers(): Marker[] {
         return this._markers;
     }
 
-    constructor(private googleMapsService: GoogleMapsService) {}
+    constructor() {
 
-    public init() {
-        const overlay = new google.maps.OverlayView();
-        overlay.draw = function() {
-            this.getPanes().markerLayer.id = 'markerLayer';
-        };
-        overlay.setMap(this.googleMapsService.map);
     }
 
-    public addMarkerOnClick() {
+    public createCluster(map: google.maps.Map) {
+        this.markerCluster = new MarkerClusterer(
+            map,
+            this.markers
+        );
+
+        this.markerCluster.setMaxZoom(16);
+    }
+
+    public registerMarkerOnClick(map: google.maps.Map) {
+        const marker = new Marker(this, {
+            position: new google.maps.LatLng(-1, -1),
+            map: map,
+            draggable: true,
+            clickable: true
+            // icon: {
+            //   url: "assets/img/target_sami_medium.png",
+            //   origin: new google.maps.Point(0, 0),
+            //   scaledSize: new google.maps.Size(250, 250)
+            // }
+        });
         google.maps.event.addListener(
-            this.googleMapsService.map,
+            map,
             'click',
             event => {
-                const marker = new Marker(this, {
-                    position: event.latLng,
-                    map: this.googleMapsService.map,
-                    draggable: true,
-                    clickable: true
-                    // icon: {
-                    //   url: "assets/img/target_sami_medium.png",
-                    //   origin: new google.maps.Point(0, 0),
-                    //   scaledSize: new google.maps.Size(250, 250)
-                    // }
-                });
-                markerCluster.addMarker(marker);
+                marker.setPosition(event.latLng);
+                this.markerCluster.addMarker(marker);
                 this.addMarker(marker);
-                this.googleMapsService.map.panTo(this.getLast().getPosition());
+                map.panTo(this.getLast().getPosition());
             }
         );
+        return marker;
     }
 
     public getGeocodeFromSelectedMarker(): google.maps.LatLng {
         return this.selectedMarker.getPosition();
-    }
-
-    public registerMarkerClick(marker: Marker): void {
-        marker.addListener('click', event => {
-            this.setSelectedMarker(marker);
-            this.googleMapsService.getAddressFromGeocode(marker.getPosition());
-        });
     }
 
     public findByIndex(index: number): Marker {

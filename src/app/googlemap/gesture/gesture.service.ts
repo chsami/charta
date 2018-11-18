@@ -1,7 +1,12 @@
-
 import { Injectable } from '@angular/core';
+import { GestureModule } from './gesture.module';
 
 import 'hammerjs';
+
+@Injectable({
+  providedIn: GestureModule
+})
+
 
 /// <reference path="../../../node_modules/@types/hammerjs/index.d.ts" />
 
