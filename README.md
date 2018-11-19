@@ -1,2 +1,2 @@
 # charta
-Maps library in angular
+Ionic 4 App that utilizes the sach-maps library
