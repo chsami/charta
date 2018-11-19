@@ -3,8 +3,6 @@ import { Marker } from './models/marker.model';
 import { Injectable } from '@angular/core';
 import { MarkerStateEnum } from './enum/marker.enum';
 
-/// <reference types="googlemaps" />
-
 @Injectable({
     providedIn: MarkerModule
 })

@@ -8,8 +8,6 @@ import {
 import { environment } from '../../environments/environment';
 import {MapService, MarkerService, Marker} from 'sach-map';
 
-/// <reference path="../../../node_modules/@types/googlemaps/index.d.ts" />
-
 @Component({
     selector: 'app-map',
     templateUrl: 'map.page.html',

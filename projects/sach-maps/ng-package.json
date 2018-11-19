@@ -3,5 +3,11 @@
   "dest": "../../dist/sach-maps",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "tslib",
+    "@types/googlemaps",
+    "@types/markerclustererplus",
+    "@google/markerclustererplus"
+  ]
 }

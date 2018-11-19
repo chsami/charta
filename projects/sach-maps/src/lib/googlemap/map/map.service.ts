@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { MapModule } from './map.module';
 import { Observable } from 'rxjs/internal/Observable';
 
-/// <reference types="googlemaps" />
-
 @Injectable({
     providedIn: MapModule
 })

@@ -11,7 +11,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "types": ["googlemaps", "markerclustererplus"],
+    "types": ["markerclustererplus", "googlemaps"],
     "lib": [
       "dom",
       "es2015"

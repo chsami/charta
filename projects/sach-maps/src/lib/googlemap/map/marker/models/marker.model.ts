@@ -2,9 +2,6 @@
 import { MarkerStateEnum } from '../enum/marker.enum';
 import { MarkerService } from '../marker.service';
 
-/// <reference types="googlemaps" />
-
-
 export class Marker extends google.maps.Marker {
 
     public state: MarkerStateEnum = MarkerStateEnum.IDLE;
