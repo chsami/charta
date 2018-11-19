@@ -1,0 +1,17 @@
+{
+  "name": "sach-maps",
+  "version": "0.0.1",
+  "author":"chsami",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "@types/googlemaps": "^3.30.16",
+    "@types/markerclustererplus": "^2.1.33"
+  },
+  "keywords": ["angular", "googlemaps"],
+  "license": "MIT"
+}

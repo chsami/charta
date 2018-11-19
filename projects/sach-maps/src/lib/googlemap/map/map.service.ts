@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MapModule } from './map.module';
 import { Observable } from 'rxjs/internal/Observable';
 
-/// <reference path="../../../node_modules/@types/googlemaps/index.d.ts" />
+/// <reference types="googlemaps" />
 
 @Injectable({
     providedIn: MapModule
@@ -31,29 +31,16 @@ export class MapService {
      */
     public init(
         mapElement: ElementRef,
-        startLat: number,
-        startLong: number,
+        mapOptions: google.maps.MapOptions,
+        compass: boolean,
         key: string
     ): google.maps.Map {
         this._key = key;
-        const latLng = new google.maps.LatLng(startLat, startLong);
-
-        const mapOptions: google.maps.MapOptions = {
-            center: latLng,
-            zoom: 16,
-            mapTypeId: google.maps.MapTypeId.SATELLITE,
-            // rotateControl: true,
-            // tilt: 45,
-            // panControl: true,
-            disableDefaultUI: true
-            // rotateControlOptions: {
-            //   position: google.maps.ControlPosition.RIGHT_CENTER
-            // }
-        };
-
+        
         this._map = new google.maps.Map(mapElement.nativeElement, mapOptions);
-
-        this.addCompass();
+        if (compass) {
+            this.addCompass();
+        }
 
         const overlay = new google.maps.OverlayView();
         overlay.draw = function () {

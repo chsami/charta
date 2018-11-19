@@ -1,0 +1,15 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ */
+/*
+ * Public API Surface of sach-maps
+ */
+export { MapService } from './lib/googlemap/map/map.service';
+export { MapModule } from './lib/googlemap/map/map.module';
+export { MarkerService } from './lib/googlemap/map/marker/marker.service';
+export { MarkerModule } from './lib/googlemap/map/marker/marker.module';
+export { Marker } from './lib/googlemap/map/marker/models/marker.model';
+export { MarkerStateEnum } from './lib/googlemap/map/marker/enum/marker.enum';
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljX2FwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL3NhY2gtbWFwcy8iLCJzb3VyY2VzIjpbInB1YmxpY19hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUtBLE9BQU8sRUFBQyxVQUFVLEVBQUMsTUFBTSxpQ0FBaUMsQ0FBQztBQUMzRCxPQUFPLEVBQUMsU0FBUyxFQUFDLE1BQU0sZ0NBQWdDLENBQUM7QUFDekQsT0FBTyxFQUFDLGFBQWEsRUFBQyxNQUFNLDJDQUEyQyxDQUFDO0FBQ3hFLE9BQU8sRUFBQyxZQUFZLEVBQUMsTUFBTSwwQ0FBMEMsQ0FBQztBQUN0RSxPQUFPLEVBQUMsTUFBTSxFQUFDLE1BQU0sZ0RBQWdELENBQUM7QUFDdEUsT0FBTyxFQUFDLGVBQWUsRUFBQyxNQUFNLDZDQUE2QyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiXG4vKlxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIHNhY2gtbWFwc1xuICovXG5cbmV4cG9ydCB7TWFwU2VydmljZX0gZnJvbSAnLi9saWIvZ29vZ2xlbWFwL21hcC9tYXAuc2VydmljZSc7XG5leHBvcnQge01hcE1vZHVsZX0gZnJvbSAnLi9saWIvZ29vZ2xlbWFwL21hcC9tYXAubW9kdWxlJztcbmV4cG9ydCB7TWFya2VyU2VydmljZX0gZnJvbSAnLi9saWIvZ29vZ2xlbWFwL21hcC9tYXJrZXIvbWFya2VyLnNlcnZpY2UnO1xuZXhwb3J0IHtNYXJrZXJNb2R1bGV9IGZyb20gJy4vbGliL2dvb2dsZW1hcC9tYXAvbWFya2VyL21hcmtlci5tb2R1bGUnO1xuZXhwb3J0IHtNYXJrZXJ9IGZyb20gJy4vbGliL2dvb2dsZW1hcC9tYXAvbWFya2VyL21vZGVscy9tYXJrZXIubW9kZWwnO1xuZXhwb3J0IHtNYXJrZXJTdGF0ZUVudW19IGZyb20gJy4vbGliL2dvb2dsZW1hcC9tYXAvbWFya2VyL2VudW0vbWFya2VyLmVudW0nO1xuXG5cblxuIl19

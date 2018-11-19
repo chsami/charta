@@ -3,16 +3,10 @@ import {
     OnInit,
     ElementRef,
     ViewChild,
-    ViewChildren,
     AfterViewInit,
-    QueryList
 } from '@angular/core';
-import { ToastController } from '@ionic/angular';
-import { MapService } from '../googlemap/map/map.service';
-import { GestureService } from '../googlemap/gesture/gesture.service';
 import { environment } from '../../environments/environment';
-import { MarkerService } from '../googlemap/map/marker/marker.service';
-import { Marker } from '../googlemap/map/marker/models/marker';
+import {MapService, MarkerService, Marker} from 'sach-map';
 
 /// <reference path="../../../node_modules/@types/googlemaps/index.d.ts" />
 
@@ -34,25 +28,38 @@ export class MapPage implements OnInit, AfterViewInit {
     ) {}
 
     ngOnInit(): void {
-        /*this.gestureService
-            .registerGesture(['pinch', 'rotate', 'pan'], mydiv)
-            .then((hammer: HammerManager) => {
-                if (hammer) {
-                    hammer.on('pinch rotate pan', event => {
-                        this.presentToast(event.scale.toString());
-                    });
-                }
-            });*/
+        // this.gestureService
+        //     .registerGesture(['pinch', 'rotate', 'pan'], mydiv)
+        //     .then((hammer: HammerManager) => {
+        //         if (hammer) {
+        //             hammer.on('pinch rotate pan', event => {
+        //                 this.presentToast(event.scale.toString());
+        //             });
+        //         }
+        //     });
     }
 
     ngAfterViewInit(): void {
         const lat: number = -34.929;
         const long: number = 138.601;
+        const location = new google.maps.LatLng(lat, long);
+        const mapOptions = {
+            center: location,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.SATELLITE,
+            // rotateControl: true,
+            // tilt: 45,
+            // panControl: true,
+            disableDefaultUI: true
+            // rotateControlOptions: {
+            //   position: google.maps.ControlPosition.RIGHT_CENTER
+            // }
+        };
         // init map
         const map = this.mapService.init(
             this.mapElement,
-            lat,
-            long,
+            mapOptions,
+            true,
             environment.GOOGLE_MAPS_API_KEY
         );
         // init cluster
@@ -143,11 +150,11 @@ export class MapPage implements OnInit, AfterViewInit {
         this.hideList = false;
     }
 
-    /*async presentToast(message: string): Promise<void> {
-        const toast = await this.toastController.create({
-            message: message,
-            duration: 2000
-        });
-        toast.present();
-    }*/
+    // async presentToast(message: string): Promise<void> {
+    //     const toast = await this.toastController.create({
+    //         message: message,
+    //         duration: 2000
+    //     });
+    //     toast.present();
+    // }
 }

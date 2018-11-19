@@ -2,7 +2,7 @@
 import { MarkerStateEnum } from '../enum/marker.enum';
 import { MarkerService } from '../marker.service';
 
-/// <reference path="../../../../node_modules/@types/googlemaps/index.d.ts" />
+/// <reference types="googlemaps" />
 
 
 export class Marker extends google.maps.Marker {

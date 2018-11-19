@@ -1,10 +1,9 @@
 import { MarkerModule } from './marker.module';
-import { Marker } from './models/marker';
+import { Marker } from './models/marker.model';
 import { Injectable } from '@angular/core';
 import { MarkerStateEnum } from './enum/marker.enum';
-import { MapService } from '../map.service';
 
-/// <reference path="../../../node_modules/@types/googlemaps/index.d.ts" />
+/// <reference types="googlemaps" />
 
 @Injectable({
     providedIn: MarkerModule

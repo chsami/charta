@@ -1,0 +1,33 @@
+{
+  "name": "sach-map",
+  "version": "0.0.1",
+  "author": "chsami",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "@types/googlemaps": "^3.30.16",
+    "@types/markerclustererplus": "^2.1.33"
+  },
+  "keywords": [
+    "angular",
+    "googlemaps"
+  ],
+  "license": "MIT",
+  "main": "bundles/sach-maps.umd.js",
+  "module": "fesm5/sach-maps.js",
+  "es2015": "fesm2015/sach-maps.js",
+  "esm5": "esm5/sach-maps.js",
+  "esm2015": "esm2015/sach-maps.js",
+  "fesm5": "fesm5/sach-maps.js",
+  "fesm2015": "fesm2015/sach-maps.js",
+  "typings": "sach-maps.d.ts",
+  "metadata": "sach-maps.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
