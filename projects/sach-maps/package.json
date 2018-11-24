@@ -1,0 +1,20 @@
+{
+  "name": "sach-map",
+  "version": "0.0.4",
+  "author":"chsami",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chsami/charta.git"
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  },
+  "dependencies": {
+    "@types/googlemaps": "^3.30.16",
+    "@types/markerclustererplus": "^2.1.33",
+    "@google/markerclustererplus": "^2.1.11"
+  },
+  "keywords": ["angular", "googlemaps"],
+  "license": "MIT"
+}
