@@ -164,33 +164,33 @@
         }
       }
     },
-    "sach-maps": {
-      "root": "projects/sach-maps",
-      "sourceRoot": "projects/sach-maps/src",
+    "sach-map": {
+      "root": "projects/sach-map",
+      "sourceRoot": "projects/sach-map/src",
       "projectType": "library",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/sach-maps/tsconfig.lib.json",
-            "project": "projects/sach-maps/ng-package.json"
+            "tsConfig": "projects/sach-map/tsconfig.lib.json",
+            "project": "projects/sach-map/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/sach-maps/src/test.ts",
-            "tsConfig": "projects/sach-maps/tsconfig.spec.json",
-            "karmaConfig": "projects/sach-maps/karma.conf.js"
+            "main": "projects/sach-map/src/test.ts",
+            "tsConfig": "projects/sach-map/tsconfig.spec.json",
+            "karmaConfig": "projects/sach-map/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/sach-maps/tsconfig.lib.json",
-              "projects/sach-maps/tsconfig.spec.json"
+              "projects/sach-map/tsconfig.lib.json",
+              "projects/sach-map/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

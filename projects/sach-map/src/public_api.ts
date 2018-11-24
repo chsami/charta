@@ -1,6 +1,6 @@
 
 /*
- * Public API Surface of sach-maps
+ * Public API Surface of sach-map
  */
 
 export {MapService} from './lib/googlemap/map/map.service';
