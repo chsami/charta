@@ -31,3 +31,4 @@ plugins/ios.json
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+dist/
