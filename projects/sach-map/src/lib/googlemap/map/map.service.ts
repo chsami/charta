@@ -1,7 +1,10 @@
-import { Injectable, ElementRef } from '@angular/core';
+import { Injectable, ElementRef, InjectionToken, Optional, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MapModule } from './map.module';
 import { Observable } from 'rxjs/internal/Observable';
+import { IMapsConfig } from './models/maps.config.interface';
+
+export const MapsConfig = new InjectionToken<IMapsConfig>('MAPS_CONFIG');
 
 @Injectable({
     providedIn: MapModule
@@ -12,8 +15,12 @@ export class MapService {
 
 
     constructor(
-        private http: HttpClient
-    ) { }
+        private http: HttpClient,
+        @Optional() @Inject(MapsConfig) config: IMapsConfig = null
+    ) { 
+        if (config)
+            this._key = config.key
+    }
 
     public get map(): google.maps.Map {
         return this._map;
@@ -31,9 +38,10 @@ export class MapService {
         mapElement: ElementRef,
         mapOptions: google.maps.MapOptions,
         compass: boolean,
-        key: string
+        key?: string
     ): google.maps.Map {
-        this._key = key;
+        if (key)
+            this._key = key;
         
         this._map = new google.maps.Map(mapElement.nativeElement, mapOptions);
         if (compass) {
