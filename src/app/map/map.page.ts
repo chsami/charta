@@ -3,10 +3,10 @@ import {
     OnInit,
     ElementRef,
     ViewChild,
-    AfterViewInit,
+    AfterViewInit
 } from '@angular/core';
 import { environment } from '../../environments/environment';
-import {MapService, MarkerService, Marker} from 'sach-map';
+import { MapService, Marker, MarkerService } from 'sach-map';
 
 @Component({
     selector: 'app-map',
@@ -14,9 +14,11 @@ import {MapService, MarkerService, Marker} from 'sach-map';
     styleUrls: ['map.page.scss']
 })
 export class MapPage implements OnInit, AfterViewInit {
+    selectedMarker: Marker;
     myInput: string;
     searchResults: any[];
     hideList: boolean;
+    map: google.maps.Map;
 
     @ViewChild('map') mapElement: ElementRef;
 
@@ -36,7 +38,6 @@ export class MapPage implements OnInit, AfterViewInit {
         //         }
         //     });
     }
-
     ngAfterViewInit(): void {
         const lat: number = -34.929;
         const long: number = 138.601;
@@ -54,66 +55,61 @@ export class MapPage implements OnInit, AfterViewInit {
             // }
         };
         // init map
-        const map = this.mapService.init(
+        this.map = this.mapService.init(
             this.mapElement,
             mapOptions,
             true,
             environment.GOOGLE_MAPS_API_KEY
         );
         // init cluster
-        this.markerService.createCluster(map);
+        this.markerService.createCluster(this.map);
         // add marker when we click on map
-        google.maps.event.addListener(
-            map,
-            'click',
-            event => {
-                const marker = new Marker(this.markerService, {
-                    position: event.latLng,
-                    map: map,
-                    draggable: true,
-                    clickable: true
-                    // icon: {
-                    //   url: "assets/img/target_sami_medium.png",
-                    //   origin: new google.maps.Point(0, 0),
-                    //   scaledSize: new google.maps.Size(250, 250)
-                    // }
-                });
-                this.markerService.markerCluster.addMarker(marker);
-                this.markerService.addMarker(marker);
-                map.panTo(this.markerService.getLast().getPosition());
-                 // add click event to the marker
-                marker.addListener('click', () => {
-                    this.mapService.getAddressFromGeocode(marker.getPosition()).then((result) => {
+        google.maps.event.addListener(this.map, 'click', event => {
+            const marker = new Marker(this.markerService, {
+                position: event.latLng,
+                map: this.map,
+                draggable: true,
+                clickable: true
+                // icon: {
+                //   url: "assets/img/target_sami_medium.png",
+                //   origin: new google.maps.Point(0, 0),
+                //   scaledSize: new google.maps.Size(250, 250)
+                // }
+            });
+            this.markerService.markerCluster.addMarker(marker);
+            this.markerService.addMarker(marker);
+            this.map.panTo(this.markerService.getLast().getPosition());
+            // add click event to the marker
+            marker.addListener('click', () => {
+                this.selectedMarker = marker;
+                this.mapService
+                    .getAddressFromGeocode(marker.getPosition())
+                    .then(result => {
                         console.log(result);
                     });
-                });
-            }
-        );
+            });
+        });
     }
 
     public rotateMarker(clockwise: boolean): void {
-        this.markerService.rotateMarker(clockwise);
+        // TODO REWRITE
+        // this.markerService.rotateMarker(clockwise);
     }
 
     public deleteMarker() {
-        this.markerService.deleteMarker();
-    }
-
-    public get selectedMarker(): Marker {
-        return this.selectedMarker;
+        if (this.selectedMarker) {
+            this.markerService.deleteMarker(this.selectedMarker);
+            this.selectedMarker = null;
+        }
     }
 
     public saveMarker() {
         const marker = new Marker(this.markerService, {
-            position: this.markerService.getMarkerInCreationState.getPosition(),
+            position: this.markerService.getLast().getPosition(),
             map: this.mapService.map,
             clickable: true
         });
         this.markerService.saveMarker();
-    }
-
-    public markerInCreationState(): Marker {
-        return this.markerService.getMarkerInCreationState;
     }
 
     onChange(event) {

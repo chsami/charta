@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { MapPage } from './map.page';
 import {  MapModule, MarkerModule } from 'sach-map';
 
+
 @NgModule({
   imports: [
     CommonModule,

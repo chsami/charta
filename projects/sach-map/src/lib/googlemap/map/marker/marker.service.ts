@@ -1,13 +1,11 @@
 import { MarkerModule } from './marker.module';
 import { Marker } from './models/marker.model';
 import { Injectable } from '@angular/core';
-import { MarkerStateEnum } from './enum/marker.enum';
 
 @Injectable({
     providedIn: MarkerModule
 })
 export class MarkerService {
-    private selectedMarker: Marker;
     private _markers: Marker[] = [];
 
     private _markerCluster: MarkerClusterer;
@@ -20,15 +18,10 @@ export class MarkerService {
         return this._markerCluster;
     }
 
-    constructor() {
-
-    }
+    constructor() {}
 
     public createCluster(map: google.maps.Map) {
-        this._markerCluster = new MarkerClusterer(
-            map,
-            this.markers
-        );
+        this._markerCluster = new MarkerClusterer(map, this.markers);
 
         this.markerCluster.setMaxZoom(16);
     }
@@ -45,21 +38,13 @@ export class MarkerService {
             //   scaledSize: new google.maps.Size(250, 250)
             // }
         });
-        google.maps.event.addListener(
-            map,
-            'click',
-            event => {
-                marker.setPosition(event.latLng);
-                this.markerCluster.addMarker(marker);
-                this.addMarker(marker);
-                map.panTo(this.getLast().getPosition());
-            }
-        );
+        google.maps.event.addListener(map, 'click', event => {
+            marker.setPosition(event.latLng);
+            this.markerCluster.addMarker(marker);
+            this.addMarker(marker);
+            map.panTo(this.getLast().getPosition());
+        });
         return marker;
-    }
-
-    public getGeocodeFromSelectedMarker(): google.maps.LatLng {
-        return this.selectedMarker.getPosition();
     }
 
     public findByIndex(index: number): Marker {
@@ -77,23 +62,13 @@ export class MarkerService {
         return this._markers.length;
     }
 
-    public setSelectedMarker(marker: Marker): void {
-        this.selectedMarker = this._markers.find(x => x === marker);
-    }
-
-    public get getMarkerInCreationState(): Marker {
-        return this._markers.find(x => x.state === MarkerStateEnum.CREATION);
-    }
-
     public addMarker(marker: Marker) {
-        marker.state = MarkerStateEnum.CREATION;
         this._markers.push(marker);
-        this.selectedMarker = marker;
     }
 
-    public rotateMarker(clockwise: boolean): void {
+    public rotateMarker(marker: Marker, clockwise: boolean): void {
         const markerIndex = this._markers.findIndex(
-            x => x === this.selectedMarker
+            x => x === marker
         );
         const elements: NodeListOf<Element> = document.querySelectorAll(
             '#markerLayer img'
@@ -110,13 +85,18 @@ export class MarkerService {
         }
     }
 
-    public deleteMarker(): void {
-        const marker: Marker = this._markers[this._markers.length - 1];
-        if (marker.state === MarkerStateEnum.CREATION) {
-            marker.setMap(null);
-            this._markers = this._markers.slice(0, this.countMarkers() - 1);
-            this.selectedMarker = null;
+    public deleteMarker(marker?: Marker): void {
+        let _marker: Marker;
+        let _index: number;
+        if (marker != null) {
+            _marker = marker;
+            _index = this._markers.findIndex(x => x === marker);
+        } else {
+            _marker = this._markers[this._markers.length - 1];
+            _index = this.countMarkers() - 1;
         }
+        this._markers = this._markers.slice(0, _index);
+        _marker.setMap(null);
     }
 
     public hideMarker(marker: Marker): void {
@@ -125,7 +105,5 @@ export class MarkerService {
 
     public saveMarker(): void {
         const marker: Marker = this.getLast();
-        marker.state = MarkerStateEnum.IDLE;
-        this.selectedMarker = null;
     }
 }

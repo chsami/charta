@@ -1,4 +1,10 @@
-import { Injectable, ElementRef, InjectionToken, Optional, Inject } from '@angular/core';
+import {
+    Injectable,
+    ElementRef,
+    InjectionToken,
+    Optional,
+    Inject
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MapModule } from './map.module';
 import { Observable } from 'rxjs/internal/Observable';
@@ -13,13 +19,13 @@ export class MapService {
     private _map: google.maps.Map;
     private _key: string;
 
-
     constructor(
         private http: HttpClient,
         @Optional() @Inject(MapsConfig) config: IMapsConfig = null
-    ) { 
-        if (config)
-            this._key = config.key
+    ) {
+        if (config) {
+            this._key = config.key;
+        }
     }
 
     public get map(): google.maps.Map {
@@ -40,16 +46,16 @@ export class MapService {
         compass: boolean,
         key?: string
     ): google.maps.Map {
-        if (key)
+        if (key) {
             this._key = key;
-        
+        }
         this._map = new google.maps.Map(mapElement.nativeElement, mapOptions);
         if (compass) {
             this.addCompass();
         }
 
         const overlay = new google.maps.OverlayView();
-        overlay.draw = function () {
+        overlay.draw = function() {
             this.getPanes().markerLayer.id = 'markerLayer';
         };
         overlay.setMap(this.map);
@@ -62,12 +68,10 @@ export class MapService {
     public getGeocodeFromAddress(address: string): Observable<any> {
         return this.http.get(
             `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${
-            this.key
+                this.key
             }`
         );
     }
-
-
 
     public async getAddressFromGeocode(
         location: google.maps.LatLng
@@ -94,5 +98,4 @@ export class MapService {
         div.innerHTML = '<img src="' + icon + '"> ' + name;
         this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(div);
     }
-
 }
