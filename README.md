@@ -16,6 +16,12 @@ npm install sach-map --save
   <script src="http://maps.google.com/maps/api/js?key=YOURKEY"></script>
 ```
 
+If you want the placesService included
+
+```bash
+  <script src="http://maps.google.com/maps/api/js?key=YOURKEY&libraries=places"></script>
+```
+
 #####  Import module:
 #
 ```bash
