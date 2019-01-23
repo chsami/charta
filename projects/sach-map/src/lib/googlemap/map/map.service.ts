@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MapModule } from './map.module';
 import { Observable } from 'rxjs/internal/Observable';
 import { IMapsConfig } from './models/maps.config.interface';
+import { GoogleMap } from './models/google-map.model';
 
 export const MapsConfig = new InjectionToken<IMapsConfig>('MAPS_CONFIG');
 
@@ -10,7 +11,7 @@ export const MapsConfig = new InjectionToken<IMapsConfig>('MAPS_CONFIG');
     providedIn: MapModule
 })
 export class MapService {
-    private _map: google.maps.Map;
+    private _map: GoogleMap;
     private _key: string;
 
 
@@ -22,12 +23,16 @@ export class MapService {
             this._key = config.key
     }
 
-    public get map(): google.maps.Map {
+    public get map(): GoogleMap {
         return this._map;
     }
 
     public get key(): string {
         return this._key;
+    }
+
+    public get placesService() {
+        return 
     }
 
     /**
@@ -38,12 +43,12 @@ export class MapService {
         mapElement: ElementRef,
         mapOptions: google.maps.MapOptions,
         compass: boolean,
-        key?: string
-    ): google.maps.Map {
+        key: string = ''
+    ): GoogleMap {
         if (key)
             this._key = key;
         
-        this._map = new google.maps.Map(mapElement.nativeElement, mapOptions);
+        this._map = new GoogleMap(mapElement.nativeElement, mapOptions);
         if (compass) {
             this.addCompass();
         }
@@ -53,6 +58,7 @@ export class MapService {
             this.getPanes().markerLayer.id = 'markerLayer';
         };
         overlay.setMap(this.map);
+
 
         return this.map;
     }
@@ -93,6 +99,17 @@ export class MapService {
             'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png';
         div.innerHTML = '<img src="' + icon + '"> ' + name;
         this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(div);
+    }
+
+    getCurrentPosition(opts: PositionOptions): Promise<Position> {
+        const options = {
+            enableHighAccuracy: opts.enableHighAccuracy,
+            timeout: opts.timeout,
+            maximumAge: opts.maximumAge
+        };
+        return new Promise<Position>((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject, options);
+        });
     }
 
 }

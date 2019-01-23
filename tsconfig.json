@@ -13,8 +13,5 @@
       "es2017",
       "dom"
     ],
-    "paths": {
-        "sach-map": ["projects/sach-map/src/public_api"]
-    }
   }
 }

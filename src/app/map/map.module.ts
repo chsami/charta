@@ -5,13 +5,16 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { MapPage } from './map.page';
 import { MapModule, MarkerModule } from 'sach-map';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MapModule,
+    MapModule.forRoot({
+        key: environment.GOOGLE_MAPS_API_KEY
+    }),
     MarkerModule,
     RouterModule.forChild([{ path: '', component: MapPage }])
   ],

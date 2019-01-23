@@ -5,8 +5,7 @@ import {
     ViewChild,
     AfterViewInit,
 } from '@angular/core';
-import { environment } from '../../environments/environment';
-import {MapService, MarkerService, Marker} from 'sach-map';
+import {MapService, MarkerService, Marker} from '../../../dist/sach-map';
 
 @Component({
     selector: 'app-map',
@@ -57,9 +56,8 @@ export class MapPage implements OnInit, AfterViewInit {
         const map = this.mapService.init(
             this.mapElement,
             mapOptions,
-            true,
-            environment.GOOGLE_MAPS_API_KEY
-        );
+            true
+        ).registerPlacesService();
         // init cluster
         this.markerService.createCluster(map);
         // add marker when we click on map
