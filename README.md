@@ -1,7 +1,7 @@
 <h1 align="center">Sach-Map</h1>
 
 <p align="center">
-Best way to quickly integrate <a href="https://getbootstrap.com/">Javascript Maps API</a> <a href="https://angular.io/">Angular</a>
+Best way to quickly integrate <a href="https://developers.google.com/maps/documentation/javascript/tutorial">Javascript Maps API</a> <a href="https://angular.io/">Angular</a>
 </p>
 
 ## Getting Started
