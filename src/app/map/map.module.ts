@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { MapPage } from './map.page';
-import { MapModule, MarkerModule } from 'sach-map';
+import { MapModule, MarkerModule } from '../../../dist/sach-map';
 import { environment } from '../../environments/environment';
 
 @NgModule({

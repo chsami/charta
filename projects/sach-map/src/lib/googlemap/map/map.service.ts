@@ -7,9 +7,7 @@ import { GoogleMap } from './models/google-map.model';
 
 export const MapsConfig = new InjectionToken<IMapsConfig>('MAPS_CONFIG');
 
-@Injectable({
-    providedIn: MapModule
-})
+
 export class MapService {
     private _map: GoogleMap;
     private _key: string;
@@ -31,10 +29,6 @@ export class MapService {
         return this._key;
     }
 
-    public get placesService() {
-        return 
-    }
-
     /**
      * Loadmap
      * @param mapElement html map elemnt
@@ -42,15 +36,15 @@ export class MapService {
     public init(
         mapElement: ElementRef,
         mapOptions: google.maps.MapOptions,
-        compass: boolean,
+        compassImage: string = null,
         key: string = ''
     ): GoogleMap {
         if (key)
             this._key = key;
         
         this._map = new GoogleMap(mapElement.nativeElement, mapOptions);
-        if (compass) {
-            this.addCompass();
+        if (compassImage != null) {
+            this.addCompass(compassImage);
         }
 
         const overlay = new google.maps.OverlayView();
@@ -93,11 +87,11 @@ export class MapService {
 
     // Compass
 
-    addCompass() {
+    addCompass(compassImage: string) {
         const div = document.createElement('div');
-        const icon =
-            'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png';
-        div.innerHTML = '<img src="' + icon + '"> ' + name;
+        let icon: string = '';
+        icon = compassImage.length > 0 ? compassImage : 'assets/compass.png';
+        div.innerHTML = '<img style="margin: 10px" src="' + icon + '"> ';
         this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(div);
     }
 

@@ -1,12 +1,13 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MapsConfig } from './map.service';
 import { IMapsConfig } from './models/maps.config.interface';
+import { MapsConfig, MapService } from './map.service';
 
 @NgModule({
     imports: [
         CommonModule
-    ]
+    ],
+    providers: [MapService]
 })
 export class MapModule {
     static forRoot(mapConfig: IMapsConfig): ModuleWithProviders {

@@ -40,14 +40,15 @@ export class MapPage implements OnInit, AfterViewInit {
         const lat: number = -34.929;
         const long: number = 138.601;
         const location = new google.maps.LatLng(lat, long);
-        const mapOptions = {
+        const mapOptions: google.maps.MapOptions = {
             center: location,
             zoom: 16,
             mapTypeId: google.maps.MapTypeId.SATELLITE,
             // rotateControl: true,
             // tilt: 45,
             // panControl: true,
-            disableDefaultUI: true
+            disableDefaultUI: true,
+
             // rotateControlOptions: {
             //   position: google.maps.ControlPosition.RIGHT_CENTER
             // }
@@ -56,7 +57,7 @@ export class MapPage implements OnInit, AfterViewInit {
         const map = this.mapService.init(
             this.mapElement,
             mapOptions,
-            true
+            '',
         ).registerPlacesService();
         // init cluster
         this.markerService.createCluster(map);
