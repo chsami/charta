@@ -1,7 +1,7 @@
 <h1 align="center">Sach-Map</h1>
 
 <p align="center">
-Best way to quickly integrate <a href="https://getbootstrap.com/">Javascript Maps API</a> <a href="https://angular.io/">Angular</a>
+Best way to quickly integrate <a href="https://developers.google.com/maps/documentation/javascript/tutorial">Javascript Maps API</a> And <a href="https://angular.io/">Angular</a>
 </p>
 
 ## Getting Started
@@ -14,6 +14,12 @@ npm install sach-map --save
 #
 ```bash
   <script src="http://maps.google.com/maps/api/js?key=YOURKEY"></script>
+```
+
+If you want the placesService included
+
+```bash
+  <script src="http://maps.google.com/maps/api/js?key=YOURKEY&libraries=places"></script>
 ```
 
 #####  Import module:

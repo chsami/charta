@@ -7,6 +7,7 @@ import { MapPage } from './map.page';
 import { MapModule, MarkerModule } from '../../../dist/sach-map';
 import { environment } from '../../environments/environment';
 
+
 @NgModule({
   imports: [
     CommonModule,
