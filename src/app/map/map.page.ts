@@ -40,24 +40,17 @@ export class MapPage implements OnInit, AfterViewInit {
         const lat: number = -34.929;
         const long: number = 138.601;
         const location = new google.maps.LatLng(lat, long);
-        const mapOptions: google.maps.MapOptions = {
-            center: location,
-            zoom: 16,
-            mapTypeId: google.maps.MapTypeId.SATELLITE,
-            // rotateControl: true,
-            // tilt: 45,
-            // panControl: true,
-            disableDefaultUI: true,
-
-            // rotateControlOptions: {
-            //   position: google.maps.ControlPosition.RIGHT_CENTER
-            // }
-        };
         // init map
         const map = this.mapService.init(
             this.mapElement,
-            mapOptions,
-            '',
+            { 
+                center: location,
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.SATELLITE,
+                disableDefaultUI: true,
+                smoothZoom: true,
+                compassImage: ''
+            }
         ).registerPlacesService();
         // init cluster
         this.markerService.createCluster(map);

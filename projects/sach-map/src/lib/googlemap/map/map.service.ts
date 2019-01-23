@@ -4,13 +4,16 @@ import { MapModule } from './map.module';
 import { Observable } from 'rxjs/internal/Observable';
 import { IMapsConfig } from './models/maps.config.interface';
 import { GoogleMap } from './models/google-map.model';
+import { googleMapOptions } from './models/google-map-options.interface';
 
 export const MapsConfig = new InjectionToken<IMapsConfig>('MAPS_CONFIG');
 
 
 export class MapService {
+
     private _map: GoogleMap;
     private _key: string;
+    private zooming: boolean;
 
 
     constructor(
@@ -35,16 +38,15 @@ export class MapService {
      */
     public init(
         mapElement: ElementRef,
-        mapOptions: google.maps.MapOptions,
-        compassImage: string = null,
-        key: string = ''
+        mapOptions: googleMapOptions,
+        key: string = '',
     ): GoogleMap {
         if (key)
             this._key = key;
         
         this._map = new GoogleMap(mapElement.nativeElement, mapOptions);
-        if (compassImage != null) {
-            this.addCompass(compassImage);
+        if (mapOptions.compassImage != null) {
+            this.addCompass(mapOptions.compassImage);
         }
 
         const overlay = new google.maps.OverlayView();
@@ -52,7 +54,9 @@ export class MapService {
             this.getPanes().markerLayer.id = 'markerLayer';
         };
         overlay.setMap(this.map);
-
+        if (mapOptions.smoothZoom) {
+            google.maps.event.addDomListener(this.map.getDiv(), 'mousewheel', event => this.smoothZoom(event));
+        }
 
         return this.map;
     }
@@ -104,6 +108,21 @@ export class MapService {
         return new Promise<Position>((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject, options);
         });
+    }
+
+    public smoothZoom(event) {
+        event.preventDefault();
+        if (!this.zooming) {
+          this.zooming = true;
+          const z = (event.wheelDelta > 0 || event.detail < 0) ? 1 : -1;
+          this.map.setZoom(Math.max(0, Math.min(22, this.map.getZoom() + z)));
+          if (Math.max(0, Math.min(22, this.map.getZoom() + z)) === 21) {
+            this.zooming = false;
+          }
+          google.maps.event.addListenerOnce(this, 'idle', () => {
+            this.zooming = false;
+          });
+        }
     }
 
 }

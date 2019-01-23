@@ -1,7 +1,6 @@
 export class GoogleMap extends google.maps.Map {
 
     private _placesService: google.maps.places.PlacesService;
-
     
     public get placesService() : google.maps.places.PlacesService {
         return this._placesService;
@@ -19,6 +18,8 @@ export class GoogleMap extends google.maps.Map {
         this._placesService = new google.maps.places.PlacesService(this);
         return this;
     }
+
+    
 
 
 }
