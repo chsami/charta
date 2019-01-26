@@ -8,6 +8,10 @@ export {MapModule} from './lib/googlemap/map/map.module';
 export {MarkerService} from './lib/googlemap/map/marker/marker.service';
 export {MarkerModule} from './lib/googlemap/map/marker/marker.module';
 export {Marker} from './lib/googlemap/map/marker/models/marker.model';
+export {GoogleMaps} from './lib/googlemap/map/models/google-map.model';
+export {googleMapsOptions} from './lib/googlemap/map/models/google-map-options.interface';
+
+
 
 
 

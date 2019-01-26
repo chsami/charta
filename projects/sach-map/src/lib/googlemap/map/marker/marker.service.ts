@@ -20,8 +20,8 @@ export class MarkerService {
 
     constructor() {}
 
-    public createCluster(map: google.maps.Map) {
-        this._markerCluster = new MarkerClusterer(map, this.markers);
+    public createCluster(map: google.maps.Map, options: MarkerClustererOptions) {
+        this._markerCluster = new MarkerClusterer(map, this.markers, options);
 
         this.markerCluster.setMaxZoom(16);
     }

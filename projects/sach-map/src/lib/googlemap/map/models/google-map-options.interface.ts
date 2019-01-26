@@ -1,4 +1,4 @@
-export interface googleMapOptions extends google.maps.MapOptions {
-    compassImage: string;
-    smoothZoom: boolean;
+export interface googleMapsOptions extends google.maps.MapOptions {
+    compassImage?: string;
+    smoothZoom?: boolean;
 }

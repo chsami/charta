@@ -48,9 +48,7 @@ export class MapPage implements OnInit, AfterViewInit {
                 center: location,
                 zoom: 16,
                 mapTypeId: google.maps.MapTypeId.SATELLITE,
-                disableDefaultUI: true,
-                smoothZoom: true,
-                compassImage: ''
+                disableDefaultUI: true
             }
         ).registerPlacesService();
         // init cluster

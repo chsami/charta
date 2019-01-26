@@ -9,15 +9,15 @@ import { HttpClient } from '@angular/common/http';
 import { MapModule } from './map.module';
 import { Observable } from 'rxjs/internal/Observable';
 import { IMapsConfig } from './models/maps.config.interface';
-import { GoogleMap } from './models/google-map.model';
-import { googleMapOptions } from './models/google-map-options.interface';
+import { GoogleMaps } from './models/google-map.model';
+import { googleMapsOptions } from './models/google-map-options.interface';
 
 export const MapsConfig = new InjectionToken<IMapsConfig>('MAPS_CONFIG');
 
 
 export class MapService {
 
-    private _map: GoogleMap;
+    private _map: GoogleMaps;
     private _key: string;
     private zooming: boolean;
 
@@ -30,7 +30,7 @@ export class MapService {
         }
     }
 
-    public get map(): GoogleMap {
+    public get map(): GoogleMaps {
         return this._map;
     }
 
@@ -44,13 +44,13 @@ export class MapService {
      */
     public init(
         mapElement: ElementRef,
-        mapOptions: googleMapOptions,
+        mapOptions: googleMapsOptions,
         key: string = '',
-    ): GoogleMap {
+    ): GoogleMaps {
         if (key)
             this._key = key;
         
-        this._map = new GoogleMap(mapElement.nativeElement, mapOptions);
+        this._map = new GoogleMaps(mapElement.nativeElement, mapOptions);
         if (mapOptions.compassImage != null) {
             this.addCompass(mapOptions.compassImage);
         }

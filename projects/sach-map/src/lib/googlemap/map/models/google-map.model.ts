@@ -1,4 +1,4 @@
-export class GoogleMap extends google.maps.Map {
+export class GoogleMaps extends google.maps.Map {
 
     private _placesService: google.maps.places.PlacesService;
     
@@ -14,7 +14,7 @@ export class GoogleMap extends google.maps.Map {
         super(mapDiv, opts);
     }
 
-    public registerPlacesService(): GoogleMap  {
+    public registerPlacesService(): GoogleMaps  {
         this._placesService = new google.maps.places.PlacesService(this);
         return this;
     }
