@@ -14,7 +14,9 @@ import { googleMapsOptions } from './models/google-map-options.interface';
 
 export const MapsConfig = new InjectionToken<IMapsConfig>('MAPS_CONFIG');
 
-
+@Injectable({
+    providedIn: 'root'
+})
 export class MapService {
 
     private _map: GoogleMaps;

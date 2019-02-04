@@ -44,15 +44,18 @@ export class MapPage implements OnInit, AfterViewInit {
         // init map
         this.map = this.mapService.init(
             this.mapElement,
-            { 
+            {
                 center: location,
                 zoom: 16,
                 mapTypeId: google.maps.MapTypeId.SATELLITE,
-                disableDefaultUI: true
+                disableDefaultUI: true,
+                smoothZoom: true
             }
         ).registerPlacesService();
         // init cluster
-        this.markerService.createCluster(this.map);
+        this.markerService.createCluster(this.map, {
+            maxZoom: 16
+        })
         // add marker when we click on map
         google.maps.event.addListener(this.map, 'click', event => {
             const marker = new Marker(this.markerService, {
@@ -81,16 +84,17 @@ export class MapPage implements OnInit, AfterViewInit {
         });
     }
 
-    public rotateMarker(clockwise: boolean): void {
-        // TODO REWRITE
-        // this.markerService.rotateMarker(clockwise);
-    }
-
     public deleteMarker() {
         if (this.selectedMarker) {
             this.markerService.deleteMarker(this.selectedMarker);
+            this.markerService.markerCluster.removeMarker(this.selectedMarker);
+            this.markerService.hideClusterMarker(this.selectedMarker);
             this.selectedMarker = null;
         }
+    }
+
+    public hideMarkers() {
+        this.markerService.hideMarkers();
     }
 
     public saveMarker() {
@@ -99,7 +103,6 @@ export class MapPage implements OnInit, AfterViewInit {
             map: this.mapService.map,
             clickable: true
         });
-        this.markerService.saveMarker();
     }
 
     onChange(event) {
@@ -133,12 +136,4 @@ export class MapPage implements OnInit, AfterViewInit {
     onFocus(event) {
         this.hideList = false;
     }
-
-    // async presentToast(message: string): Promise<void> {
-    //     const toast = await this.toastController.create({
-    //         message: message,
-    //         duration: 2000
-    //     });
-    //     toast.present();
-    // }
 }

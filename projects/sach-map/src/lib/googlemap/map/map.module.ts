@@ -6,8 +6,7 @@ import { MapsConfig, MapService } from './map.service';
 @NgModule({
     imports: [
         CommonModule
-    ],
-    providers: [MapService]
+    ]
 })
 export class MapModule {
     static forRoot(mapConfig: IMapsConfig): ModuleWithProviders {

@@ -1,5 +1,5 @@
 import { MarkerService } from './marker.service';
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MapService } from '../map.service';
 
@@ -8,4 +8,10 @@ import { MapService } from '../map.service';
     CommonModule
   ]
 })
-export class MarkerModule { }
+export class MarkerModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+          ngModule: MarkerModule
+        };
+    }
+ }

@@ -3,7 +3,7 @@ import { Marker } from './models/marker.model';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: MarkerModule
+    providedIn: 'root'
 })
 export class MarkerService {
     private _markers: Marker[] = [];
