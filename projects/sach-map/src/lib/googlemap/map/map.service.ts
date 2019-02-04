@@ -123,7 +123,7 @@ export class MapService {
           if (Math.max(0, Math.min(22, this.map.getZoom() + z)) === 21) {
             this.zooming = false;
           }
-          google.maps.event.addListenerOnce(this, 'idle', () => {
+          google.maps.event.addListenerOnce(this.map, 'idle', () => {
             this.zooming = false;
           });
         }

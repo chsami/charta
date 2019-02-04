@@ -99,11 +99,29 @@ export class MarkerService {
         _marker.setMap(null);
     }
 
+    public hideMarkers(): void {
+        for (const marker of this.markers) {
+            marker.setMap(null);
+        }
+    }
+
+    public hideClusterMarkers() {
+        for (const marker of this.markerCluster.getMarkers()) {
+            marker.setMap(null);
+        }
+    }
+
+    public hideClusterMarker(marker: Marker) {
+        this.markerCluster.getMarkers().find(x => x === marker).setMap(null);
+    }
+
     public hideMarker(marker: Marker): void {
         marker.setMap(null);
     }
 
-    public saveMarker(): void {
-        const marker: Marker = this.getLast();
+    public clearMarkers() {
+        this._markers = [];
     }
+
+
 }
