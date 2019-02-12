@@ -55,7 +55,7 @@ export class MapPage implements OnInit, AfterViewInit {
         // init cluster
         this.markerService.createCluster(this.map, {
             maxZoom: 16
-        })
+        });
         // add marker when we click on map
         google.maps.event.addListener(this.map, 'click', event => {
             const marker = new Marker(this.markerService, {

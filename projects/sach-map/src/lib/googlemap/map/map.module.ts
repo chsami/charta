@@ -13,6 +13,6 @@ export class MapModule {
         return {
           ngModule: MapModule,
           providers: [ {provide: MapsConfig, useValue: mapConfig} ]
-        }
+        };
     }
  }
