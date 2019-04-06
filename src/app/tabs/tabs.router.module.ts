@@ -26,18 +26,16 @@ const routes: Routes = [
         path: 'about',
         outlet: 'about',
         component: AboutPage
-      },
-      {
-        path: 'contact',
-        outlet: 'contact',
-        component: ContactPage
-      },
-      {
-        path: 'map',
-        outlet: 'map',
-        component: MapPage
       }
     ]
+  },
+  {
+    path: 'contact',
+    loadChildren: '../contact/contact.module#ContactPageModule'
+  },
+  {
+    path: 'map',
+    loadChildren: '../map/map.module#MapPageModule'
   },
   {
     path: '',

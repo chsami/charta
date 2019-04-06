@@ -88,7 +88,6 @@ export class MapPage implements OnInit, AfterViewInit {
         if (this.selectedMarker) {
             this.markerService.deleteMarker(this.selectedMarker);
             this.markerService.markerCluster.removeMarker(this.selectedMarker);
-            this.markerService.hideClusterMarker(this.selectedMarker);
             this.selectedMarker = null;
         }
     }
