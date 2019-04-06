@@ -13,7 +13,11 @@ import { environment } from '../../environments/environment';
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild([{ path: '', component: MapPage }])
+    RouterModule.forChild([{ path: '', component: MapPage }]),
+    MapModule.forRoot({
+        key: environment.GOOGLE_MAPS_API_KEY
+    }),
+    MarkerModule.forRoot()
   ],
   declarations: [MapPage]
 })

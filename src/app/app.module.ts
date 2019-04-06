@@ -10,7 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../../src/environments/environment';
-import { MapModule, MarkerModule } from '../../dist/sach-map';
 
 @NgModule({
     declarations: [AppComponent],
@@ -19,11 +18,7 @@ import { MapModule, MarkerModule } from '../../dist/sach-map';
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
-        HttpClientModule,
-        MapModule.forRoot({
-            key: environment.GOOGLE_MAPS_API_KEY
-        }),
-        MarkerModule],
+        HttpClientModule],
     providers: [
         StatusBar,
         SplashScreen,

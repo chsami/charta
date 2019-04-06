@@ -11,8 +11,10 @@ import { MapsConfig, MapService } from './map.service';
 export class MapModule {
     static forRoot(mapConfig: IMapsConfig): ModuleWithProviders {
         return {
-          ngModule: MapModule,
-          providers: [ {provide: MapsConfig, useValue: mapConfig} ]
+            ngModule: MapModule,
+            providers: [
+                { provide: MapsConfig, useValue: mapConfig }
+            ]
         };
     }
- }
+}
