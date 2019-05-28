@@ -8,6 +8,7 @@
     "tslib",
     "@types/googlemaps",
     "@types/markerclustererplus",
-    "@google/markerclustererplus"
+    "@google/markerclustererplus",
+    "ionicons"
   ]
 }

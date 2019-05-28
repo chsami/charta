@@ -21,6 +21,7 @@ export class MapService {
     private _map: GoogleMaps;
     private _key: string;
     private zooming: boolean;
+    private locationCrosshairClicked: Function = new Function();
 
     constructor(
         private http: HttpClient,
@@ -55,6 +56,13 @@ export class MapService {
         this._map = new GoogleMaps(mapElement.nativeElement, mapOptions);
         if (mapOptions.compassImage != null) {
             this.addCompass(mapOptions.compassImage);
+        }
+
+        if (mapOptions.locationCrosshair) {
+            this.addLocationCrosshair();
+            if (mapOptions.locationCrosshairCallback) {
+                this.locationCrosshairClicked = mapOptions.locationCrosshairCallback;
+            }
         }
 
         const overlay = new google.maps.OverlayView();
@@ -102,6 +110,23 @@ export class MapService {
         let icon: string = '';
         icon = compassImage.length > 0 ? compassImage : 'assets/compass.png';
         div.innerHTML = '<img style="margin: 10px" src="' + icon + '"> ';
+        this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(div);
+    }
+
+    addLocationCrosshair() {
+        const div = document.createElement('div');
+        div.innerHTML = '<ion-icon style="vertical-align: middle;" name="locate"></ion-icon> ';
+        div.onclick = async () => {
+            const position = await this.getCurrentPosition({ enableHighAccuracy: true, maximumAge: 0, timeout: 3000 });
+            this.locationCrosshairClicked(position);
+        };
+        div.style.fontSize = 'x-large';
+        div.style.backgroundColor = 'white';
+        div.style.width = '33px';
+        div.style.height = '33px';
+        div.style.borderRadius = '25px';
+        div.style.textAlign = 'center';
+        div.style.marginRight = '10px';
         this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(div);
     }
 

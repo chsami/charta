@@ -5,7 +5,7 @@ import {
     ViewChild,
     AfterViewInit
 } from '@angular/core';
-import {MapService, MarkerService, Marker} from '../../../dist/sach-map';
+import { MapService, MarkerService, Marker } from '../../../dist/sach-map';
 
 @Component({
     selector: 'app-map',
@@ -24,7 +24,7 @@ export class MapPage implements OnInit, AfterViewInit {
     constructor(
         private mapService: MapService,
         private markerService: MarkerService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         // this.gestureService
@@ -49,7 +49,10 @@ export class MapPage implements OnInit, AfterViewInit {
                 zoom: 16,
                 mapTypeId: google.maps.MapTypeId.SATELLITE,
                 disableDefaultUI: true,
-                smoothZoom: true
+                smoothZoom: true,
+                compassImage: '',
+                locationCrosshair: true,
+                locationCrosshairCallback: this.goToCurrentLocation
             }
         ).registerPlacesService();
         // init cluster
@@ -82,6 +85,10 @@ export class MapPage implements OnInit, AfterViewInit {
                     });
             });
         });
+    }
+
+    private goToCurrentLocation(position: Position) {
+        this.map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
     }
 
     public deleteMarker() {
@@ -124,7 +131,7 @@ export class MapPage implements OnInit, AfterViewInit {
         this.mapService.map.panTo(location);
     }
 
-    onCancel(event) {}
+    onCancel(event) { }
 
     onBlur(event) {
         setTimeout(() => {
