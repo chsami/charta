@@ -52,7 +52,7 @@ export class MapPage implements OnInit, AfterViewInit {
                 smoothZoom: true,
                 compassImage: '',
                 locationCrosshair: true,
-                locationCrosshairCallback: this.goToCurrentLocation
+                locationCrosshairCallback: (position) => this.goToCurrentLocation(position)
             }
         ).registerPlacesService();
         // init cluster

@@ -59,7 +59,7 @@ export class MapService {
         if (mapOptions.locationCrosshair) {
             this.addLocationCrosshair();
             if (mapOptions.locationCrosshairCallback) {
-                this.locationCrosshairClicked = mapOptions.locationCrosshairCallback;
+                this.locationCrosshairClicked = (position) => mapOptions.locationCrosshairCallback(position);
             }
         }
 
