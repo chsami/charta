@@ -88,7 +88,11 @@ export class MapPage implements OnInit, AfterViewInit {
     }
 
     private goToCurrentLocation(position: Position) {
-        this.map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        if (position) {
+            this.map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        } else {
+            console.log('No position found!');
+        }
     }
 
     public deleteMarker() {

@@ -115,8 +115,12 @@ export class MapService {
         const div = document.createElement('div');
         div.innerHTML = '<ion-icon style="vertical-align: middle;" name="locate"></ion-icon> ';
         div.onclick = async () => {
-            const position = await this.getCurrentPosition({ enableHighAccuracy: true, maximumAge: 0, timeout: 3000 });
-            this.locationCrosshairClicked(position);
+            try {
+                const position = await this.getCurrentPosition({ enableHighAccuracy: true, maximumAge: 0, timeout: 3000 });
+                this.locationCrosshairClicked(position);
+            } catch (error) {
+                this.locationCrosshairClicked();
+            }
         };
         div.style.fontSize = 'x-large';
         div.style.backgroundColor = 'white';
