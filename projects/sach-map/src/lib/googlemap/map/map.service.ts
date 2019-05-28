@@ -122,6 +122,7 @@ export class MapService {
         };
         div.style.fontSize = 'x-large';
         div.style.backgroundColor = 'white';
+        div.style.color = 'black';
         div.style.width = '33px';
         div.style.height = '33px';
         div.style.borderRadius = '25px';
