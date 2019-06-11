@@ -123,13 +123,14 @@ export class MapService {
             }
         };
         div.style.fontSize = 'x-large';
-        div.style.backgroundColor = 'white';
+        div.style.backgroundColor = '#f4f5f8';
         div.style.color = 'black';
-        div.style.width = '33px';
-        div.style.height = '33px';
+        div.style.width = '34px';
+        div.style.height = '34px';
         div.style.borderRadius = '25px';
         div.style.textAlign = 'center';
         div.style.marginRight = '10px';
+        div.style.boxShadow = '0 3px 5px -1px rgba(0,0,0,0.2),0 6px 10px 0 rgba(0,0,0,0.14),0 1px 18px 0 rgba(0,0,0,0.12)';
         this.map.controls[google.maps.ControlPosition.RIGHT_TOP].push(div);
     }
 
