@@ -113,7 +113,7 @@ export class MapService {
 
     addLocationCrosshair() {
         const div = document.createElement('div');
-        div.innerHTML = '<ion-icon style="vertical-align: middle;" name="locate"></ion-icon> ';
+        div.innerHTML = '<ion-icon style="vertical-align: middle;font-size: 21px;" name="locate"></ion-icon> ';
         div.onclick = async () => {
             try {
                 const position = await this.getCurrentPosition({ enableHighAccuracy: true, maximumAge: 0, timeout: 3000 });
